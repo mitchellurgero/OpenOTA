@@ -15,6 +15,10 @@ How To Install
                 
 3. Edit ota.prop and ota.url.prop to match your server and ROM.
                 ota.url.prpo format is "http://domain.com/ota/" YOU WILL NEED A TRAILING SLASH
-                ota.prop is just the version number of your ROM (E.G 1.2.3.4)(Technically speaking, if the Latest version is different from the currently running version, the app will prompt the user to download.)
-4. edit update.php variables to match your latests ROM.
-5. Test the application to make sure the update works, and enjoy.
+                ota.prop is just the version number of your ROM (E.G 1.2.3.4)(Technically speaking, if the Latest version is
+          different from the currently running version, the app will prompt the user to download.)
+4. Add the following to the permissions part of updater-script:
+          set_perm(0, 2000, 0755, "/system/ota.prop");
+          set_perm(0, 2000, 0755, "/system/ota.url.prop");
+5. edit update.php variables to match your latests ROM.
+6. Test the application to make sure the update works, and enjoy.
