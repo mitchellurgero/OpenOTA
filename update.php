@@ -1,7 +1,7 @@
 <?php
-$CurrentVersion='7';
-$DownloadPath='http://service.urgero.org/fx3roms/download.php?file=AdvancedStock7V7.zip';
-$BasicRomInfo='This is update addresses OTA Updater issues from version 6. This update is safe to "dirty flash"';
+$CurrentVersion='7'; //Version Number.
+$DownloadPath='http://domain.com/ota/path_to_update.zip'; // Path to the update.zip Download.
+$BasicRomInfo='Some ROM Info here.'; // Limited to 250 Characters for now.
 $GETCom = htmlspecialchars($_GET["push"]);
 if ($GETCom == "DownloadUpdate") {
 header( 'Location: '.$DownloadPath );
