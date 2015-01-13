@@ -1,0 +1,103 @@
+﻿Version=2.71
+IconFile=
+NumberOfModules=3
+Module1=HttpUtils
+ModuleVisible1=1
+Module2=HttpUtilsService
+ModuleVisible2=1
+Module3=CheckForUpdate
+ModuleVisible3=1
+Package=org.urgero.ota
+DoNotOverwriteManifest=False
+ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: http://www.basic4ppc.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="4" android:targetSdkVersion="14"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~'End of default text.~\n~
+UserTypesHint=
+NumberOfFiles=1
+File1=MainLayout.bal
+NumberOfLibraries=3
+Library1=core
+Library2=http
+Library3=phone
+@EndOfDesignText@
+#Region  Project Attributes 
+	#ApplicationLabel: OpenOTA
+	#VersionCode: 1
+	#VersionName: 1.0.6
+	'SupportedOrientations possible values: unspecified, landscape or portrait.
+	#SupportedOrientations: unspecified
+	#CanInstallToExternalStorage: False
+#End Region
+
+#Region  Activity Attributes 
+	#FullScreen: False
+	#IncludeTitle: True
+#End Region
+
+Sub Process_Globals
+	'These global variables will be declared once when the application starts.
+	'These variables can be accessed from all modules.
+	Dim UpdateURL As String		
+End Sub
+Sub Globals
+	'These global variables will be redeclared each time the activity is created.
+	'These variables can only be accessed from this module.
+	Dim Button1 As Button
+	Dim Label1 As Label
+	Dim Label2 As Label
+	Dim Label3 As Label
+	Dim Button2 As Button
+	Dim Button3 As Button
+End Sub
+Sub Activity_Create(FirstTime As Boolean)
+	'Do not forget to load the layout file created with the visual designer. For example:
+	Activity.LoadLayout("MainLayout")
+	Activity.Title = "OpenOTA"
+	StartService("CheckForUpdate")
+	Activity.AddMenuItem("About OpenOTA","aboutOTA")
+	'Activity.AddMenuItem("Reboot to Recovery","recoveryBoot")
+End Sub
+Sub recoveryBoot_Click
+Dim Command, Runner As String
+Dim StdOut, StdErr As StringBuilder
+Dim Result As Int
+Dim Ph As Phone
+StdOut.Initialize
+StdErr.Initialize
+Runner = File.Combine(File.DirInternalCache, "runner")
+Command = File.Combine(File.DirInternalCache, "command")
+File.WriteString(File.DirInternalCache, "runner", "su < " & Command)
+File.WriteString(File.DirInternalCache, "command", "reboot recovery" & CRLF & "exit") 'Any commands via crlf, and exit at end 
+Result = Ph.Shell("sh", Array As String(Runner), StdOut, StdErr)
+
+End Sub
+Sub aboutOTA_Click
+Msgbox("Developed and Tested by sandix of XDA Forums and AndroidForums" & CRLF & "Copyright © 2015 URGERO.ORG","About OpenOTA")
+End Sub
+Sub Activity_Resume
+ If CheckForUpdate.RefreshDataFlag = True Then
+  CheckForUpdate.RefreshDataFlag = False
+  UpdateLabels
+ End If
+End Sub
+Sub Activity_Pause (UserClosed As Boolean)
+
+End Sub
+Sub DownloadUpdate
+    Dim p As PhoneIntents
+    StartActivity(p.OpenBrowser(UpdateURL & "update.php?push=DownloadUpdate"))
+End Sub
+Sub Button1_Click
+	StartService("CheckForUpdate")
+End Sub
+Sub Button2_Click
+	DownloadUpdate
+End Sub
+Sub Button3_Click
+CheckForUpdate.Notification1.Cancel(1)
+	Activity.Finish
+	ExitApplication
+End Sub
+Sub UpdateLabels
+Label1.Text = "Running Version: " & CheckForUpdate.RunningVersion
+Label2.Text = "Version Available: " & CheckForUpdate.CurrentVersion
+Label3.Text = "ROM Information: " & CRLF & CheckForUpdate.RomInfo
+End Sub
