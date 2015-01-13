@@ -16,9 +16,10 @@ How To Install
                 /ota.url.prop
                 
 3. Edit ota.prop and ota.url.prop to match your server and ROM.
+
                 ota.url.prop format is "http://domain.com/ota/" YOU WILL NEED A TRAILING SLASH
-                ota.prop is just the version number of your ROM (E.G 1.2.3.4)(Technically speaking, if the Latest version is
-          different from the currently running version, the app will prompt the user to download.)
+                
+                ota.prop is just the version number of your ROM (E.G 1.2.3.4)(Technically speaking, if the Latest version is different from the currently running version, the app will prompt the user to download.)
 4. Add the following to the permissions part of updater-script:
 
           set_perm(0, 2000, 0755, "/system/ota.prop");
