@@ -5,7 +5,7 @@ Open Source OTA Checker for Android (PHP/JAVA/BASIC)
 This is a self hosted solution to getting Custom ROM OTA updates. This is a prototype and may change in the future.
 Please report any bugs found.
 
-How To Install
+How To Install/Configure for your ROM:
 ===============
 1. Download master.zip and upload to a php server that can serve php and zip properly.
 2. Insert the system folder into your roms system folder so it looks like:
