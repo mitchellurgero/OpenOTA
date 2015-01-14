@@ -26,5 +26,5 @@ How To Install/Configure for your ROM:
           
           set_perm(0, 2000, 0755, "/system/ota.url.prop");
           
-5. edit update.php variables to match your latests ROM.
+5. edit update.php variables to match your latests ROM. Then upload update.php to your webserver(PHP 5.4+, Apache, NGINX, IIS, ETC)
 6. Test the application to make sure the update works, and enjoy.
