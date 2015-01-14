@@ -19,7 +19,7 @@ How To Install/Configure for your ROM:
 
                 ota.url.prop format is "http://domain.com/ota/" YOU WILL NEED A TRAILING SLASH
                 
-                ota.prop is just the version number of your ROM (E.G 1.2.3.4)(Technically speaking, if the Latest version is different from the currently running version, the app will prompt the user to download.)
+                ota.prop is just the version number of the users CURRENT ROM, Meaning before the update. This number is the "running" version of the ROM where as update.php will have the "latest" or "current" version of the ROM. (Technically speaking, if the Latest version is different from the currently running version, the app will prompt the user to download.)
 4. Add the following to the permissions part of updater-script:
 
           set_perm(0, 2000, 0755, "/system/ota.prop");
